@@ -1,11 +1,25 @@
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
 #include "./rk_implementer.hpp"
 #include<vector>
 
-namespace RKSolvers{
 
 
-    template <class Step> 
-    std::vector<State> explicitEulerRule(Function &&f, double time, const Step &y0, unsinged int steps){
+// collection of common RK explicit RK methods.
+namespace ExplicitRKSolvers{
+
+    // traditional explicit euler method with convergence order 1
+    template <typename Step, typename Function> 
+    std::vector<Step> explicitEulerRule(Function f, double time, const Step &y0, unsigned int steps){
 
         Eigen::MatrixXd A(1,1);
         A << 0;
@@ -18,9 +32,9 @@ namespace RKSolvers{
 
     }
 
-
-    template <class Step> 
-    std::vector<State> explicitTrapezoidalRule(Function &&f, double time, const Step &y0, unsinged int steps){
+    // explicit trapizoidal rule with convergece order 2
+    template <typename Step, typename Function> 
+    std::vector<Step> explicitTrapezoidalRule(Function f, double time, const Step &y0, unsigned int steps){
 
         Eigen::MatrixXd A(2,2);
         A << 0,0,
@@ -34,9 +48,9 @@ namespace RKSolvers{
 
     }
 
-
-    template <class Step> 
-    std::vector<State> explicitMidPointRule(Function &&f, double time, const Step &y0, unsinged int steps){
+    // explicit midpoint rule with convergence order 2
+    template <typename Step, typename Function>
+    std::vector<Step> explicitMidPointRule(Function f, double time, const Step &y0, unsigned int steps){
 
         Eigen::MatrixXd A(2,2);
         A << 0,0,
@@ -50,9 +64,9 @@ namespace RKSolvers{
 
     }
 
-
-    template <class Step> 
-    std::vector<State> classical4thOrderRule(Function &&f, double time, const Step &y0, unsinged int steps){
+    // classical 4-th order runge kutta single step method
+    template <typename Step, typename Function>
+    std::vector<Step> classical4thOrderRule(Function f, double time, const Step &y0, unsigned int steps){
 
         Eigen::MatrixXd A(4,4);
         A << 0,0,0,0,
@@ -68,9 +82,9 @@ namespace RKSolvers{
 
     }
 
-
-    template <class Step> 
-    std::vector<State> kuttas38thRule(Function &&f, double time, const Step &y0, unsinged int steps){
+    // kutta's 3/8-rule of order 4
+    template <typename Step, typename Function>
+    std::vector<Step> kuttas38thRule(Function f, double time, const Step &y0, unsigned int steps){
 
         Eigen::MatrixXd A(4,4);
         A << 0,0,0,0,
@@ -86,7 +100,8 @@ namespace RKSolvers{
 
     }
 
-
+    namespace ExplicitRKSolvers{
+    }
 
 
 }

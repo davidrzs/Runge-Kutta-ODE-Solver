@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+
+
+# visual studio code config
+.vscode/*
