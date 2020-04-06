@@ -42,8 +42,22 @@ template <class Step> class ExplicitRungeKuttaIntegrator {
         std::vector<Step> solve(Function &&f, double time, const Step &y0, unsigned int steps){
 
             std::vector<Step> stepsVector;
+;
+            
+            // as advertised the first position will be our initial state
+            stepsVector.push_back(y0);
 
+            // knowing the total time and number of steps allows us to calculate the time we integrate over every step
             double h = time / steps;
+
+            // now we call the solver "steps" times to do the actual integration
+            for(unsigned int i = 0; i < steps; i++){
+                // integrate and directly add to our list
+                stepsVector.push_back(iteration(f,stepsVector.back(),h));
+            }
+            
+            return stepsVector;
+
 
         }
 
@@ -59,23 +73,40 @@ template <class Step> class ExplicitRungeKuttaIntegrator {
          */
         template<typename Function>
         Step iteration(Function &&f, Step &y0, const double h){
+            
+            // initialize current step as previous step
+            Step y1 = y0;
+
+            // temporary vector to store the increments
+            std::vector<Step> increments;
+            
+            // calculate an increment per loop iteration
+            for(unsigned int i = 0; i < size; i++){
+
+                Step increment = y0;
+                // second loop to account for dependency of current increments on previous increments
+                for(unsigned int k = 0; k < i; k++){
+                    increment += h*A(i,k) * increments[k];
+                }
+
+                // store the increment                
+                increments.push_back(f(increment));
+            }
+
+            // now we add the increments with correct weights to y0 which we already copied over to y1
+            for(unsigned int i = 0; i < size; i++){
+                y1 += h*b(i) *increments[i];
+            }
+
+            return y1;
 
         }
-
-
 
 
         const Eigen::MatrixXd A;
         const Eigen::VectorXd b;
         unsigned int size;
 };
-
-
-
-
-
-
-
 
 
 
