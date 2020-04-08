@@ -14,7 +14,7 @@
 
 
 
-// collection of common RK explicit RK methods.
+// collection of common explicit RK methods.
 namespace ExplicitRKSolvers{
 
     // traditional explicit euler method with convergence order 1
@@ -24,7 +24,7 @@ namespace ExplicitRKSolvers{
         Eigen::MatrixXd A(1,1);
         A << 0;
         
-        Eigen::VectorXd b(2);
+        Eigen::VectorXd b(1);
         b << 1;
 
         ExplicitRungeKuttaIntegrator<Step> eRKi(A,b);
@@ -66,7 +66,7 @@ namespace ExplicitRKSolvers{
 
     // classical 4-th order runge kutta single step method
     template <typename Step, typename Function>
-    std::vector<Step> classical4thOrderRule(Function f, double time, const Step &y0, unsigned int steps){
+    std::vector<Step> classical4thOrderRuleIntegrator(Function f, double time, const Step &y0, unsigned int steps){
 
         Eigen::MatrixXd A(4,4);
         A << 0,0,0,0,
@@ -100,8 +100,63 @@ namespace ExplicitRKSolvers{
 
     }
 
-    namespace ExplicitRKSolvers{
+}
+
+
+// collection of common implicit RK methods.
+namespace ImplicitRKSolvers{
+
+    // traditional implicit euler method with convergence order 1, L-stable
+    template <typename Step, typename Function, typename Jacobian> 
+    std::vector<Step> implicitEulerRule(Function f, Jacobian df, double time, const Step &y0, unsigned int steps){
+
+        Eigen::MatrixXd A(1,1);
+        A << 1;
+        
+        Eigen::VectorXd b(1);
+        b << 1;
+
+        ImplicitRungeKuttaIntegrator<Step> iRKi(A,b);
+        return iRKi.solve(f, df, time, y0, steps);
+
     }
+
+
+    // third order Radau RK-SSM with convergence, L-stable
+    template <typename Step, typename Function, typename Jacobian> 
+    std::vector<Step> radauRKSSMRule3(Function f, Jacobian df, double time, const Step &y0, unsigned int steps){
+
+        Eigen::MatrixXd A(2,2);
+        A << 5.0/12, -1.0/12,
+             3.0/4, 1.0/4;
+        
+        Eigen::VectorXd b(2);
+        b << 3.0/4, 1.0/4;
+
+        ImplicitRungeKuttaIntegrator<Step> iRKi(A,b);
+        return iRKi.solve(f, df, time, y0, steps);
+
+    }
+
+
+    // fifth order Radau RK-SSM with convergence, L-stable
+    // METHOD NOT VERIFIED
+    template <typename Step, typename Function, typename Jacobian> 
+    std::vector<Step> radauRKSSMRule5(Function f, Jacobian df, double time, const Step &y0, unsigned int steps){
+
+        Eigen::MatrixXd A(3,3);
+        A << (88-7*std::sqrt(6))/360 , (196-169*std::sqrt(6))/1800 , (-2+3*std::sqrt(6))/225,
+            (196+169*std::sqrt(6))/1800 , (88+7*std::sqrt(6))/360 , (-2-3*std::sqrt(6))/225,
+            (16-std::sqrt(6))/36, (16+std::sqrt(6))/36, 1.0/9;
+        
+        Eigen::VectorXd b(3);
+        b << (16-std::sqrt(6))/36 , (16+std::sqrt(6))/36, 1.0/9; 
+
+        ImplicitRungeKuttaIntegrator<Step> iRKi(A,b);
+        return iRKi.solve(f, df, time, y0, steps);
+
+    }
+
 
 
 }
