@@ -10,13 +10,13 @@ In this example we have defined a function `f` which takes a state `y0` and calc
 
 Please note that I am not a biologist, hence the constants I picked in the equation might highly unrealistic.
 
-![lotka volterra](lotkaVolterraSolved.png)
+![lotka volterra](./lotkaVolterraSolved.png)
 
 ### Lorenz Attractor
 
 Will follow soon.
 
-![lorenz attractor](lorenzAttractorSolved.png)
+![lorenz attractor](./lorenzAttractorSolved.png)
 
 ## How to Run the Example
 
