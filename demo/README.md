@@ -1,6 +1,8 @@
-# Demo: Solving and Plotting the Lotka-Volterra ODE
+# Demo: Solving and Plotting  ODEs
 
 ## Short Explanation
+
+### Lotka-Volterra
 
 The [Lotka-Volterra ordinary differential equation (ODE)](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations) can be used to model the interaction between two species. 
 
@@ -8,7 +10,13 @@ In this example we have defined a function `f` which takes a state `y0` and calc
 
 Please note that I am not a biologist, hence the constants I picked in the equation might highly unrealistic.
 
+![lotka volterra](lotkaVolterraSolved.png)
 
+### Lorenz Attractor
+
+Will follow soon.
+
+![lorenz attractor](lorenzAttractorSolved.png)
 
 ## How to Run the Example
 
@@ -22,6 +30,4 @@ To fetch the dependencies for Matplotlib-Cpp install the following packages (on 
 
 ### Compile the File
 
-Having installed the prerequisites for Matplotlib-Cpp we can now compile our `demo.cpp` file using `g++ -I /usr/include/eigen3 -I /usr/include/python2.7  demo/demo.cpp -lpython2.7`. This of course assumes that you have an Eigen3 installation at `/usr/include/eigen3 `.
-
-
+Having installed the prerequisites for Matplotlib-Cpp we can now compile our `demo.cpp` file using `g++ -I /usr/include/eigen3 -I /usr/include/python2.7  demo/demo.cpp -lpython2.7`. This of course assumes that you have an Eigen3 installation at `/usr/include/eigen3 `. Alternatively, if you have cloned the whole project, you can run `make demo` and let `Make` compile the demo for you.
