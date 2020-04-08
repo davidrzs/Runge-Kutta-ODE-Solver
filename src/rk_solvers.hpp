@@ -122,6 +122,24 @@ namespace ImplicitRKSolvers{
     }
 
 
+    // implicit midpoint method, order 2
+    template <typename Step, typename Function, typename Jacobian> 
+    std::vector<Step> implicitMidpointRule(Function f, Jacobian df, double time, const Step &y0, unsigned int steps){
+
+        Eigen::MatrixXd A(1,1);
+        A << 1;
+        
+        Eigen::VectorXd b(1);
+        b << 1;
+
+        ImplicitRungeKuttaIntegrator<Step> iRKi(A,b);
+        return iRKi.solve(f, df, time, y0, steps);
+
+    }
+
+
+
+
     // third order Radau RK-SSM with convergence, L-stable
     template <typename Step, typename Function, typename Jacobian> 
     std::vector<Step> radauRKSSMRule3(Function f, Jacobian df, double time, const Step &y0, unsigned int steps){
