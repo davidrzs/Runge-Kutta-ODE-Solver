@@ -1,6 +1,12 @@
 # Runge Kutta ODE Solver
 
-**UNDER CONSTRUCTION**
+**under construction**
+
+<p>
+  <img src="./demo/lotkaVolterraSolved.png" width="49%" />
+  <img src="./demo/lorenzAttractorSolved.png" width="49%" /> 
+</p>
+
 
 This tiny header only C++ library provides very easy to use [Runge-Kutta solvers](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) for ordinary differential equations.
 
@@ -10,6 +16,10 @@ It features:
 - Implicit solvers
 - A wide range of built in Runge-Kutta methods.
 - Very easy implementation of custom methods. The solvers can implement any provided Butcher scheme.
+
+
+
+
 
 ## Usage
 
