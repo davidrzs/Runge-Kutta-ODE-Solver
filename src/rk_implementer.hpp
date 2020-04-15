@@ -123,7 +123,7 @@ template <typename Step> class ImplicitRungeKuttaIntegrator {
 
 
         /**
-         * The solve methods applies an explicit Runge Kutta method to a given ODE
+         * The solve methods applies an implicit Runge Kutta method to a given ODE
          * 
          * @param f the function we are integrating over
          * @param the Jacobian of f, needed for finding 0 (newton method) to solve for stages.
@@ -157,7 +157,7 @@ template <typename Step> class ImplicitRungeKuttaIntegrator {
 
     private:
         /**
-         * This function computes on single runge kutta step and returns its result.
+         * This function computes on single runge kutta step and returns its result. This method uses 
          * 
          * @param f the function we are integrating over
          * @param y0 the starting value (the initial value or the previous step's result)
@@ -167,6 +167,7 @@ template <typename Step> class ImplicitRungeKuttaIntegrator {
          */
         template<typename Function, typename Jacobian>
         Step iteration(Function &&f, Jacobian && J, Step &y0, const double h){
+            
             
             // TODO 
 
@@ -178,6 +179,71 @@ template <typename Step> class ImplicitRungeKuttaIntegrator {
         const Eigen::VectorXd b;
         unsigned int size;
 };
+
+
+// a collection of optimization methods needed for implicit runge-kutta methods
+namespace OptimizationMethods{
+
+    /**
+     * Takes a function f, its derivative J as well as a starting point x0 and finds the root x' with f(x') = 0
+     * Source: Adapted from 'C++ code 8.4.4.5' of the book https://www.sam.math.ethz.ch/~grsam/NCSE19/NumCSE_Lecture_Document.pdf
+     * 
+     * @param f the function whose root we want to find
+     * @param J the jacobian of f
+     * @param x0 the starting value for the newton iteration
+     * @param reltol if the difference between two iterations is smaller than rtol*x', with x' a likely root, we stop the iteration
+     * @param abstol if the difference between two iterations is smaller than abstol we stop the iteration 
+     * 
+     * @exception if the function does not converge an error will be thrown
+     * 
+     * 
+     * @return the root of f (the value x where f(x) = 0)
+     * 
+     */
+    template<typename Step, typename Function, typename Jacobian>
+    Step dampedNewton(Function &&f, Jacobian &&J, Step x0, double reltol = 1e-7, double abstol=1e-8){
+
+        // first we check the dimensionality of the function
+        uint32_t n = x0.size();
+        Step correction(n), tentativeCorrection(n);
+        Step x(n);
+        Step xTemp(n);
+        double correctionNorm, tentativeCorrectionNorm;
+        
+        // convergence variables
+        double lambda = 1.0;
+        double lmin = 1E-3;
+
+        do {
+            // calculate the difference to the next iterate
+            auto jacobianLUFactorized = J(x).lu();
+            correction = jacobianLUFactorized.solve(f(x));
+            correctionNorm = correction.norm();
+
+            do {
+                // reduction of damping factor
+                lambda /= 2;
+                // check for non convergence
+                if(lambda < lmin){
+                    throw "No convergence";
+                }
+                // tentative next iterate
+                xTemp = x-lambda*correction;
+                tentativeCorrection = jacobianLUFactorized.solve(f(xTemp));
+                tentativeCorrectionNorm = tentativeCorrection.norm();
+            } while(tentativeCorrectionNorm > (1-lambda/2)*correctionNorm);
+            // we accept the new step
+            x = xTemp;
+            // we somewhat reduce the damping
+            lambda = std::min(2*lambda,1.0);
+        } while((tentativeCorrectionNorm > reltol*x.norm()) && tentativeCorrectionNorm > abstol);
+    }
+}
+
+
+
+
+
 
 
 

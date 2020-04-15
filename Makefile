@@ -1,5 +1,5 @@
-main: src/main.cpp src/rk_implementer.hpp
-	g++ -I /usr/include/eigen3 src/main.cpp
+usage: usage.cpp src/rk_implementer.hpp
+	g++ -I /usr/include/eigen3 usage.cpp
 
 
 demo: demo/demo.cpp src/rk_implementer.hpp
