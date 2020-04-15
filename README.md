@@ -1,7 +1,5 @@
 # Runge Kutta ODE Solver
 
-**under construction**
-
 <p>
   <img src="./demo/lotkaVolterraSolved.png" width="49%" />
   <img src="./demo/lorenzAttractorSolved.png" width="49%" /> 
@@ -16,9 +14,23 @@ It features:
 - A wide range of built in Runge-Kutta methods.
 - Very easy implementation of custom methods. The solvers can implement any provided Butcher scheme.
 
+## Table of Contents
+
+  * [Usage](#usage)
+  * [Built-in Methods](#built-in-methods)
+    * [Explicit Methods](#explicit-methods)
+    * [Implicit Methods](#implicit-methods)
+  * [Installation](#installation)
+  * [What the Code does not provide!](#what-the-code-does-not-provide!)
+  * [Background of this Project](#background-of-this-project)
+  * [Sources](#sources)
+  * [License](#license)
+
+
 ## Usage
 
-TODO
+will follow soon
+
 
 ## Built-in Methods
 
@@ -41,9 +53,6 @@ TODO
 |   `radauRKSSMRule3`   |  3    | L-stable |
 |  `radauRKSSMRule5`   |   5   | L-stable |
 
-## Examples
-
-TODO
 
 ## Installation
 
@@ -53,6 +62,8 @@ Make sure you have Eigen installed: This can easily be done using your packet ma
 
 - on Debian based systems: `sudo apt install libeigen3-dev`
 - on RPM based systems: `sudo dnf install eigen3-devel`
+
+**Running Eigen**
 
 To run the code you very likely have to tell your C++ compiler where it can find eigen. For example: `g++ -I /usr/include/eigen3 myFile.cpp`
 
