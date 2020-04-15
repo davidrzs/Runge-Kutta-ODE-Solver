@@ -29,8 +29,61 @@ It features:
 
 ## Usage
 
-will follow soon
+This section has two parts:
 
+1. How do I prepare a problem for it to be solved in the RK solver.
+2. How do I actually use the solver.
+
+### 1. Perparing a problem
+
+Assume we have an ordinary differential equation f with y' = f(y). For explicit solvers y can be any Eigen datatype whereas for implicit solvers y must be of type `Eigen::VectorXd`. Note that if the differential equation is one dimensional e.g. f(x) = x we just use a onedimensional vector.
+
+In the example below f implementes the so called Lotka-Volterra differential equation as a lambda function (though you can also use normal functions).
+
+Now we must specify some additional details: We need to know what our initial conditions are, denoted `y0` below, as well as the time interval we are solving over, 20 time units in the example below.
+
+Last but not least, we have to tell the solver how many steps it should take. Very vaguely for explicit methods more steps is better.
+
+```
+unsigned int steps = 100;
+unsigned int time = 20;
+
+auto f = [] (Eigen::VectorXd y) {
+  Eigen::VectorXd df(2);
+  df << y(0)*(3-0.7*y(1)) , -y(1)*(0.7-0.8*y(0));
+  return df;
+};
+
+Eigen::VectorXd y0(2);
+y0 << 6,2;
+```
+
+### How do I actually use the solver.
+
+This is super simple, for an explicit built in solver we just pass the required four parameters:
+
+```
+std::vector<Eigen::VectorXd> results = ExplicitRKSolvers::classical4thOrderRuleIntegrator(f, time,y0, steps);
+std::cout << "The classical 4th order Runge-Kutta method gives us" << results.back().transpose() << std::endl;
+```
+
+The method returns an `std::vector` where every element in the vector is the result of a single Runge-Kutta step. The last one is the result of the whole integration.
+
+If you want to use your custom Butcher's table this is simple too, just supply it to the `ExplicitRungeKuttaIntegrator`:
+
+```
+Eigen::MatrixXd A(3,3);
+A << 0, 0, 0,
+      1, 0, 0,
+      1.0/4,1.0/4,0;
+Eigen::VectorXd b(3);
+b << 1.0/6, 1.0/6, 2.0/3;
+
+ExplicitRungeKuttaIntegrator<Eigen::VectorXd> Solver(A,b);
+std::vector<Eigen::VectorXd> y2Vec = Solver.solve(f,2,y0,10);
+
+std::cout << "SSPRK3 3rd order Runge-Kutta method gives us = " << y2Vec[10].transpose() << std::endl;
+```
 
 ## Built-in Methods
 
