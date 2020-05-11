@@ -24,7 +24,7 @@ It features:
     * [Explicit Methods](#explicit-methods)
     * [Implicit Methods](#implicit-methods)
   * [Installation](#installation)
-  * [What the Code does not provide!](#what-the-code-does-not-provide!)
+  * [What the Code does not provide](#what-the-code-does-not-provide!)
   * [Background of this Project](#background-of-this-project)
   * [Sources](#sources)
   * [License](#license)
