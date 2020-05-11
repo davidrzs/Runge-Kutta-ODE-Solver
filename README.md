@@ -47,7 +47,7 @@ Now we must specify some additional details: We need to know what our initial co
 
 Last but not least, we have to tell the solver how many steps it should take. Very vaguely for explicit methods more steps is better.
 
-```
+```c++
 unsigned int steps = 100;
 unsigned int time = 20;
 
@@ -65,7 +65,7 @@ y0 << 6,2;
 
 This is super simple, for an explicit built in solver we just pass the required four parameters:
 
-```
+```c++
 std::vector<Eigen::VectorXd> results = ExplicitRKSolvers::classical4thOrderRuleIntegrator(f, time,y0, steps);
 std::cout << "The classical 4th order Runge-Kutta method gives us" << results.back().transpose() << std::endl;
 ```
@@ -74,7 +74,7 @@ The method returns an `std::vector` where every element in the vector is the res
 
 If you want to use your custom Butcher's table this is simple too, just supply it to the `ExplicitRungeKuttaIntegrator`:
 
-```
+```c++
 Eigen::MatrixXd A(3,3);
 A << 0, 0, 0,
       1, 0, 0,
