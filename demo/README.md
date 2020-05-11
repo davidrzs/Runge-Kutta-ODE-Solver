@@ -20,13 +20,13 @@ Will follow soon.
 
 ## How to Run the Example
 
-The project depends on [Eigen]() as well as [Matplotlib-Cpp](https://github.com/lava/matplotlib-cpp).
+The project depends on [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) as well as [Matplotlib-Cpp](https://github.com/lava/matplotlib-cpp).
 
 Note that Matplotlib-Cpp uses Python 2, this isn't ideal but it is still a very good and lghtweight plotting library:
 
-### Fetch the Requires Packages
+### Fetch the Required Packages
 
-To fetch the dependencies for Matplotlib-Cpp install the following packages (on debian systems for example) `sudo apt-get install python-matplotlib python-numpy python2.7-dev`.
+To fetch the dependencies for Matplotlib-Cpp install the following packages (on debian systems for example) `sudo apt-get install python3-matplotlib python3-numpy python3-dev`.
 
 ### Compile the File
 
