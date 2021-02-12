@@ -8,14 +8,15 @@
 This tiny header only C++ library provides very easy to use [Runge-Kutta solvers](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) for ordinary differential equations.
 
 
-# STILL UNDER CONSTRUCTION
-
 It features:
 
 - Explicit solvers
 - Implicit solvers
-- A wide range of built in Runge-Kutta methods.
+- A wide range of built-in Runge-Kutta methods.
 - Very easy implementation of custom methods. The solvers can implement any provided Butcher scheme.
+
+Do not use this code in safety critical applications! The code comes with ABSOLUTELY NO WARRANTY. See the [license](./LICENSE) for more information.
+
 
 ## Table of Contents
 
@@ -37,7 +38,7 @@ This section has two parts:
 1. How do I prepare a problem for it to be solved in the RK solver.
 2. How do I actually use the solver.
 
-### 1. Perparing a problem
+### 1. Preparing a problem
 
 Assume we have an ordinary differential equation f with y' = f(y). For explicit solvers y can be any Eigen datatype whereas for implicit solvers y must be of type `Eigen::VectorXd`. Note that if the differential equation is one dimensional e.g. f(x) = x we just use a onedimensional vector.
 
@@ -61,8 +62,9 @@ Eigen::VectorXd y0(2);
 y0 << 6,2;
 ```
 
-### How do I actually use the solver.
+### 2. How do I actually use the solver?
 
+#### Using a built-in solver
 This is super simple, for an explicit built in solver we just pass the required four parameters:
 
 ```c++
@@ -71,6 +73,8 @@ std::cout << "The classical 4th order Runge-Kutta method gives us" << results.ba
 ```
 
 The method returns an `std::vector` where every element in the vector is the result of a single Runge-Kutta step. The last one is the result of the whole integration.
+
+#### Use a custom solver
 
 If you want to use your custom Butcher's table this is simple too, just supply it to the `ExplicitRungeKuttaIntegrator`:
 
@@ -140,3 +144,8 @@ In fall of 2019 I took the class "Numerical Methods for CSE" taught by Prof. Hip
 ## License
 
 See the [license](./LICENSE) file in this repository.
+
+
+## Contributing
+
+Your contribution is more than welcome! For issues you can open a GitHub issue.
