@@ -3,4 +3,4 @@ usage: usage.cpp src/rk_implementer.hpp
 
 
 demo: demo/demo.cpp src/rk_implementer.hpp
-	g++ -I /usr/include/eigen3 -I /usr/include/python3.8  demo/demo.cpp -lpython3.8
+	g++ -I /usr/include/eigen3 -I /usr/include/python3.9  demo/demo.cpp -lpython3.9
