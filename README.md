@@ -11,7 +11,7 @@ This tiny header only C++ library provides very easy to use [Runge-Kutta solvers
 It features:
 
 - Explicit solvers
-- Implicit solvers
+- Implicit solvers (not yet implemented)
 - A wide range of built-in Runge-Kutta methods.
 - Very easy implementation of custom methods. The solvers can implement any provided Butcher scheme.
 

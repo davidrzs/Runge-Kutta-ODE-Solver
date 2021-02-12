@@ -168,7 +168,7 @@ template <typename Step> class ImplicitRungeKuttaIntegrator {
         template<typename Function, typename Jacobian>
         Step iteration(Function &&f, Jacobian && J, Step &y0, const double h){
             
-            
+            throw "not yet implemented";
             // TODO 
 
         }
